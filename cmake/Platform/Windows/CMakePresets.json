@@ -1,0 +1,161 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 26,
+        "patch": 0
+    },
+    "include": [
+        "../Common/CMakePresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "windows-vs2022",
+            "displayName": "Windows Visual Studio 2022 Generator + MSVC",
+            "description": "Configure Windows to use the VS2022 generator",
+            "binaryDir": "${sourceDir}/build/windows_vs2022_msvc",
+            "inherits": [
+                "host-windows",
+                "cpp-standard",
+                "vs2022",
+                "msvc",
+                "vcpkg"
+            ],
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "set"
+            }
+        },
+        {
+            "name": "windows-vs2022-clangcl",
+            "displayName": "Windows Visual Studio 2022 Generator + ClangCL",
+            "description": "Configure Windows to use the VS2022 generator and the ClangCL compiler",
+            "binaryDir": "${sourceDir}/build/windows_vs2022_clangcl",
+            "inherits": [
+                "host-windows",
+                "cpp-standard",
+                "vs2022",
+                "clang-cl",
+                "vcpkg"
+            ],
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
+            },
+            "toolset": {
+                "value": "ClangCL,host=x64",
+                "strategy": "set"
+            }
+        },
+        {
+            "name": "windows-ninja",
+            "displayName": "Windows Ninja Generator + MSVC",
+            "description": "Configure Windows using the Ninja generator",
+            "binaryDir": "${sourceDir}/build/windows_ninja_msvc",
+            "inherits": [
+                "host-windows",
+                "cpp-standard",
+                "ninja",
+                "msvc",
+                "vcpkg"
+            ],
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            }
+        },
+        {
+            "name": "windows-ninja-clangcl",
+            "displayName": "Windows Ninja Generator + ClangCL",
+            "description": "Configure Windows using the Ninja generator and the ClangCL compiler",
+            "binaryDir": "${sourceDir}/build/windows_ninja_clangcl",
+            "inherits": [
+                "host-windows",
+                "cpp-standard",
+                "ninja",
+                "clang-cl",
+                "vcpkg"
+            ],
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "ClangCL,host=x64",
+                "strategy": "external"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-vs2022",
+            "configurePreset": "windows-vs2022",
+            "inherits": [
+                "host-windows"
+            ]
+        },
+        {
+            "name": "windows-vs2022-clangcl",
+            "configurePreset": "windows-vs2022-clangcl",
+            "inherits": [
+                "host-windows"
+            ]
+        },
+        {
+            "name": "windows-ninja",
+            "configurePreset": "windows-ninja",
+            "inherits": [
+                "host-windows"
+            ]
+        },
+        {
+            "name": "windows-ninja-clangcl",
+            "configurePreset": "windows-ninja-clangcl",
+            "inherits": [
+                "host-windows"
+            ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "windows-vs2022",
+            "configurePreset": "windows-vs2022",
+            "inherits": [
+                "test-default",
+                "host-windows"
+            ]
+        },
+        {
+            "name": "windows-vs2022-clangcl",
+            "configurePreset": "windows-vs2022-clangcl",
+            "inherits": [
+                "test-default",
+                "host-windows"
+            ]
+        },
+        {
+            "name": "windows-ninja",
+            "configurePreset": "windows-ninja",
+            "inherits": [
+                "test-default",
+                "host-windows"
+            ]
+        },
+        {
+            "name": "windows-ninja-clangcl",
+            "configurePreset": "windows-ninja-clangcl",
+            "inherits": [
+                "test-default",
+                "host-windows"
+            ]
+        }
+    ]
+}

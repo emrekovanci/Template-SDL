@@ -1,0 +1,26 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+    "name": "template-sdl",
+    "version-string": "0.1.0",
+    "dependencies": [
+        "sdl3",
+        {
+            "name": "sdl3-image",
+            "features": ["png"]
+        },
+        "glm",
+        "efsw"
+    ],
+    "default-features": [],
+    "features": {
+        "tests": {
+            "description": "Dependencies for testing",
+            "dependencies": [
+                {
+                    "name": "catch2",
+                    "version>=": "3.5.0"
+                }
+            ]
+        }
+    }
+}

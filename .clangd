@@ -1,0 +1,34 @@
+# https://clangd.llvm.org/
+
+CompileFlags:
+  CompilationDatabase: .vscode
+
+Style:
+  FullyQualifiedNamespaces:
+    - std
+
+InlayHints:
+  Enabled: Yes
+  BlockEnd: Yes
+  Designators: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  DefaultArguments: Yes
+  TypeNameLimit: 24
+
+Hover:
+  ShowAKA: No
+
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: None
+
+---
+
+# Ignore packages that installed by vcpkg
+If:
+  PathMatch: (out|build|vendor).*
+Diagnostics:
+  Suppress: '*'
+  UnusedIncludes: None
+  MissingIncludes: None

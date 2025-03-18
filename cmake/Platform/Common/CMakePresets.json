@@ -1,0 +1,264 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 26,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "cpp-standard",
+            "description": "This preset makes sure the project actually builds with at least the specified standard",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_CXX_EXTENSIONS": "OFF",
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "debug",
+            "description": "Specifies build type for single-configuration generators: debug",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release",
+            "description": "Specifies build type for single-configuration generators: release",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "vcpkg",
+            "hidden": true,
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        {
+            "name": "compile-commands-json",
+            "description": "Generate compile_commands.json file when used with a Ninja Generator",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "host-windows",
+            "displayName": "Host OS - Windows",
+            "description": "Specifies Windows host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "host-linux",
+            "displayName": "Host OS - Linux",
+            "description": "Specifies Linux host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "host-mac",
+            "displayName": "Host OS - Mac",
+            "description": "Specifies Mac host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "host-windows-linux-mac",
+            "displayName": "Host OS - Any",
+            "description": "Allows Windows, Linux or Mac to be used for host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "inList",
+                "string": "${hostSystemName}",
+                "list": [
+                  "Darwin",
+                  "Linux",
+                  "Windows"
+                ]
+            }
+        },
+        {
+            "name": "vs2022",
+            "displayName": "Visual Studio 2022",
+            "description": "Configure using VS2022 generator",
+            "generator": "Visual Studio 17 2022",
+            "hidden": true
+        },
+        {
+            "name": "ninja",
+            "displayName": "Ninja",
+            "description": "Configure using Ninja",
+            "generator": "Ninja",
+            "hidden": true,
+            "inherits": [
+                "compile-commands-json"
+            ]
+        },
+        {
+            "name": "xcode",
+            "displayName": "XCode",
+            "description": "Configure using Xcode generator",
+            "generator": "Xcode",
+            "hidden": true
+        },
+        {
+            "name": "msvc",
+            "displayName": "MSVC",
+            "description": "Use MSVC toolset",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-msvc-x64"
+                }
+            }
+        },
+        {
+            "name": "clang-cl",
+            "description": "Use ClangCL toolset",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64"
+                }
+            }
+        },
+        {
+            "name": "gcc",
+            "description": "Use GCC",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+        {
+            "name": "clang++",
+            "description": "Use Clang++",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "host-windows",
+            "displayName": "Host OS - Windows",
+            "description": "Specifies Windows host condition for build preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "host-linux",
+            "displayName": "Host OS - Linux",
+            "description": "Specifies Linux host condition for build preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "host-mac",
+            "displayName": "Host OS - Mac",
+            "description": "Specifies Mac host condition for build preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "host-windows-linux-mac",
+            "displayName": "Host OS - Any",
+            "description": "Allows Windows, Linux or Mac to be used for host condition for build preset",
+            "hidden": true,
+            "condition": {
+                "type": "inList",
+                "string": "${hostSystemName}",
+                "list": [
+                  "Darwin",
+                  "Linux",
+                  "Windows"
+                ]
+            }
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "test-default",
+            "hidden": true,
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "host-windows",
+            "displayName": "Host OS - Windows",
+            "description": "Specifies Windows host condition for test preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "host-linux",
+            "displayName": "Host OS - Linux",
+            "description": "Specifies Linux host condition for test preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "host-mac",
+            "displayName": "Host OS - Mac",
+            "description": "Specifies Mac host condition for test preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "EditorConfig.EditorConfig",
+        "IBM.output-colorizer",
+        "TimGJones.hlsltools",
+    ]
+}

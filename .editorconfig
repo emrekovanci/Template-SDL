@@ -1,0 +1,25 @@
+# http://EditorConfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+[*{c,cpp,cxx,h,hpp,hxx,cmake}]
+indent_size = 4
+
+[CMakeLists.txt]
+indent_size = 4
+
+[*.yml]
+indent_size = 2
+
+[*.json]
+indent_size = 4
+
+[{.clangd,.clang-format,.clang-tidy}]
+indent_size = 2

@@ -1,0 +1,83 @@
+{
+    // [Files]
+    "files.associations": {
+        "*.clang-tidy": "yaml",
+        "*.clang-format": "yaml",
+        "*.clangd": "yaml",
+        "*.codespellrc": "ini",
+        "*.vert": "hlsl",
+        "*.frag": "hlsl",
+    },
+    "files.exclude": {
+        ".vscode/.cache": true,
+        ".vscode/TMPDIR": true,
+        "**/.vs": true,
+        "**/build": true,
+        "**/out": true,
+    },
+    "files.readonlyInclude": {
+        "out/**": true,
+        "build/**": true,
+    },
+
+    // [Editor]
+    "[cpp]": {
+        "editor.formatOnSave": true,
+        "editor.semanticHighlighting.enabled": "configuredByTheme"
+    },
+
+    // [CMake]
+    "cmake.configureOnOpen": false,
+    "cmake.configureOnEdit": false,
+    "cmake.saveBeforeBuild": true,
+    "cmake.clearOutputBeforeBuild": true,
+    "cmake.copyCompileCommands": "${workspaceFolder}/.vscode/compile_commands.json",
+    "cmake.options.statusBarVisibility": "hidden",
+    // to disable showing the same problem twice (clangd & cmake)
+    "cmake.enabledOutputParsers": [
+        "cmake",
+        "gnuld"
+    ],
+    "cmake.pinnedCommands": [
+        "cmake.selectConfigurePreset",
+        "cmake.build",
+        "cmake.stop",
+        "cmake.install",
+        "cmake.ctest",
+        "cmake.cpack",
+        "cmake.workflow",
+        "cmake.clean",
+        "cmake.cleanRebuild",
+    ],
+
+    // [C_Cpp] Disable formatting and intellisense engine in Microsoft C/C++ extension (provides debugging)
+    "C_Cpp.autocomplete": "disabled",
+    "C_Cpp.formatting": "disabled",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.enhancedColorization": "disabled",
+    "C_Cpp.hover": "disabled",
+
+    // [Clangd]
+    "clangd.restartAfterCrash": true,
+    "clangd.detectExtensionConflicts": true,
+    "clangd.onConfigChanged": "restart",
+    "clangd.arguments": [
+        "--all-scopes-completion=false",
+        "--background-index",
+        "--background-index-priority=normal",
+        "--clang-tidy=true",
+        "--completion-style=detailed", // show all function overloads. Otherwise it combines like func(...)
+        "--function-arg-placeholders=false", // when disabled, completions contain only parentheses for function calls. When enabled, completions also contain placeholders for method parameters
+        "--header-insertion=never",
+        "--header-insertion-decorators=true",
+        "--limit-references=100", // default: 1000
+        "--limit-results=100", // default: 100, (affects max intellisense results, for example std::string foo; after typing "foo.")
+        "--rename-file-limit=0",
+        "--pch-storage=memory", // if disk specified, .pch files can takes too much disk space,
+        "--pretty",
+        //"-j=6",
+        //"--ranking-model=decision_forest",
+        //"--log=verbose"
+    ],
+}

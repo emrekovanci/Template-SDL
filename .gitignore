@@ -1,0 +1,24 @@
+# build folders
+build/
+out/
+
+# ide folders
+.vs/
+.idea/
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# cmake
+compile_commands.json
+
+# clangd-server
+.cache
+
+# user conf
+CMakeUserPresets.json

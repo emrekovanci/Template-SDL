@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Launch with RenderDoc",
+            "type": "shell",
+            "command": "renderdoccmd",
+            "args": [
+                "capture",
+                "--wait-for-exit",
+                "--capture-file",
+                "${command:cmake.getLaunchTargetDirectory}/capture.rdc",
+                "--working-dir",
+                "${command:cmake.getLaunchTargetDirectory}",
+                "${command:cmake.getLaunchTargetPath}",
+            ],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Open Last Capture in RenderDoc",
+            "type": "shell",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-Command",
+                    "$captures = Get-ChildItem '${command:cmake.getLaunchTargetDirectory}' -Filter '*.rdc' | Sort-Object LastWriteTime -Descending; $latestCapture = $captures[0].FullName; Start-Process 'qrenderdoc' -ArgumentList '--filename', $latestCapture"
+                ]
+            },
+            "problemMatcher": [],
+        }
+    ]
+}

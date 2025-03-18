@@ -1,0 +1,16 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 26,
+        "patch": 0
+    },
+    "include": [
+        "cmake/Platform/Linux/CMakePresets.json",
+        "cmake/Platform/Mac/CMakePresets.json",
+        "cmake/Platform/Windows/CMakePresets.json"
+    ],
+    "configurePresets": [],
+    "buildPresets": [],
+    "testPresets": []
+}

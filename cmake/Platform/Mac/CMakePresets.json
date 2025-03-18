@@ -1,0 +1,73 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 26,
+        "patch": 0
+    },
+    "include": [
+        "../Common/CMakePresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "mac-ninja-clang",
+            "displayName": "Mac Ninja Generator + Clang++",
+            "description": "Configure Mac to use the Ninja generator and the Clang++ compiler",
+            "binaryDir": "${sourceDir}/build/mac_ninja_clang",
+            "inherits": [
+                "host-mac",
+                "cpp-standard",
+                "ninja",
+                "clang++",
+                "vcpkg"
+            ]
+        },
+        {
+            "name": "mac-xcode-clang",
+            "displayName": "Mac Xcode Generator + Clang++",
+            "description": "Configure Mac to use the Xcode generator and the Clang++ compiler",
+            "binaryDir": "${sourceDir}/build/mac_xcode_clang",
+            "inherits": [
+                "host-mac",
+                "cpp-standard",
+                "xcode",
+                "clang++",
+                "vcpkg"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "mac-ninja-clang",
+            "configurePreset": "mac-ninja-clang",
+            "inherits": [
+                "host-mac"
+            ]
+        },
+        {
+            "name": "mac-xcode-clang",
+            "configurePreset": "mac-xcode-clang",
+            "inherits": [
+                "host-mac"
+            ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "mac-ninja-clang",
+            "configurePreset": "mac-ninja-clang",
+            "inherits": [
+                "test-default",
+                "host-mac"
+            ]
+        },
+        {
+            "name": "mac-xcode-clang",
+            "configurePreset": "mac-xcode-clang",
+            "inherits": [
+                "test-default",
+                "host-mac"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,73 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 26,
+        "patch": 0
+    },
+    "include": [
+        "../Common/CMakePresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "linux-ninja-gcc",
+            "displayName": "Linux Ninja Generator + GCC",
+            "description": "Configure Linux to use the Ninja generator and the GCC compiler",
+            "binaryDir": "${sourceDir}/build/linux_ninja_gcc",
+            "inherits": [
+                "host-linux",
+                "cpp-standard",
+                "ninja",
+                "gcc",
+                "vcpkg"
+            ]
+        },
+        {
+            "name": "linux-ninja-clang",
+            "displayName": "Linux Ninja Generator + Clang++",
+            "description": "Configure Linux to use the Ninja generator and the Clang++ compiler",
+            "binaryDir": "${sourceDir}/build/linux_ninja_clang",
+            "inherits": [
+                "host-linux",
+                "cpp-standard",
+                "ninja",
+                "clang++",
+                "vcpkg"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "linux-ninja-gcc",
+            "configurePreset": "linux-ninja-gcc",
+            "inherits": [
+                "host-linux"
+            ]
+        },
+        {
+            "name": "linux-ninja-clang",
+            "configurePreset": "linux-ninja-clang",
+            "inherits": [
+                "host-linux"
+            ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "linux-ninja-gcc",
+            "configurePreset": "linux-ninja-gcc",
+            "inherits": [
+                "test-default",
+                "host-linux"
+            ]
+        },
+        {
+            "name": "linux-ninja-clang",
+            "configurePreset": "linux-ninja-clang",
+            "inherits": [
+                "test-default",
+                "host-linux"
+            ]
+        }
+    ]
+}
