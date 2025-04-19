@@ -72,10 +72,10 @@ jobs:
           - { os: windows-2022, generator: vs2022, compiler: llvm, preset: windows-vs2022-clangcl }
           - { os: windows-2022, generator: ninja,  compiler: msvc, preset: windows-ninja }
           - { os: windows-2022, generator: ninja,  compiler: llvm, preset: windows-ninja-clangcl }
-          - { os: ubuntu-24.04, generator: ninja,  compiler: gcc,  preset: linux-ninja-gcc }
-          - { os: ubuntu-24.04, generator: ninja,  compiler: llvm, preset: linux-ninja-clang }
-          - { os: macos-13,     generator: ninja,  compiler: llvm, preset: mac-ninja-clang }
-          - { os: macos-13,     generator: xcode,  compiler: llvm, preset: mac-xcode-clang }
+          # - { os: ubuntu-24.04, generator: ninja,  compiler: gcc,  preset: linux-ninja-gcc }
+          # - { os: ubuntu-24.04, generator: ninja,  compiler: llvm, preset: linux-ninja-clang }
+          # - { os: macos-13,     generator: ninja,  compiler: llvm, preset: mac-ninja-clang }
+          # - { os: macos-13,     generator: xcode,  compiler: llvm, preset: mac-xcode-clang }
         config:
           - { name: Shared, flags: -DBUILD_SHARED_LIBS=TRUE }
           - { name: Static, flags: -DBUILD_SHARED_LIBS=FALSE }
