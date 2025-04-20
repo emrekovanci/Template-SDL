@@ -14,6 +14,16 @@
 
 namespace
 {
+    const std::array<Vertex, 6> vertices {
+        Vertex { .x = -0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
+        Vertex { .x = 0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
+        Vertex { .x = -0.5f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
+
+        Vertex { .x = 0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
+        Vertex { .x = 0.5f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
+        Vertex { .x = -0.5f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
+    };
+
     SDL_AppResult loadGraphicsPipeline(void** appstate)
     {
         auto* app = static_cast<AppContext*>(*appstate);
@@ -92,7 +102,7 @@ namespace
 
         SDL_GPUBufferCreateInfo vertexBufferCreateInfo {
             .usage = SDL_GPU_BUFFERUSAGE_VERTEX,
-            .size = sizeof(Vertex) * 3,
+            .size = sizeof(Vertex) * vertices.size(),
         };
         SDL_GPUBuffer* vertexBuffer = SDL_CreateGPUBuffer(app->gpuDevice, &vertexBufferCreateInfo);
         if (vertexBuffer == nullptr)
@@ -104,7 +114,7 @@ namespace
 
         SDL_GPUTransferBufferCreateInfo transferBufferCreateInfo {
             .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD,
-            .size = sizeof(Vertex) * 3,
+            .size = sizeof(Vertex) * vertices.size(),
         };
         SDL_GPUTransferBuffer* transferBuffer = SDL_CreateGPUTransferBuffer(app->gpuDevice, &transferBufferCreateInfo);
         if (transferBuffer == nullptr)
@@ -119,13 +129,6 @@ namespace
             SDL_Log("Failed to map transfer buffer: %s", SDL_GetError());
             return SDL_APP_FAILURE;
         }
-
-        // Vertex definitions
-        std::array<Vertex, 3> vertices {
-            Vertex { .x = -0.5f, .y = -0.5f, .z = 0.0f, .r = 255, .g = 0, .b = 0, .a = 255 },
-            Vertex { .x = 0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
-            Vertex { .x = 0.0f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
-        };
 
         std::ranges::copy(vertices, transferData);
 
@@ -153,7 +156,7 @@ namespace
         SDL_GPUBufferRegion vertexBufferRegion {
             .buffer = app->vertexBuffer,
             .offset = 0,
-            .size = sizeof(Vertex) * 3,
+            .size = sizeof(Vertex) * vertices.size(),
         };
 
         SDL_UploadToGPUBuffer(copyPass, &transferBufferLocation, &vertexBufferRegion, false);
@@ -253,7 +256,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     };
 
     SDL_BindGPUVertexBuffers(renderPass, 0, &vertexBufferBinding, 1);
-    SDL_DrawGPUPrimitives(renderPass, 3, 1, 0, 0);
+    SDL_DrawGPUPrimitives(renderPass, vertices.size(), 1, 0, 0);
     SDL_EndGPURenderPass(renderPass);
 
     SDL_SubmitGPUCommandBuffer(cmdbuf);
