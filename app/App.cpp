@@ -94,7 +94,13 @@ namespace
             .usage = SDL_GPU_BUFFERUSAGE_VERTEX,
             .size = sizeof(Vertex) * 3,
         };
-        app->vertexBuffer = SDL_CreateGPUBuffer(app->gpuDevice, &vertexBufferCreateInfo);
+        SDL_GPUBuffer* vertexBuffer = SDL_CreateGPUBuffer(app->gpuDevice, &vertexBufferCreateInfo);
+        if (vertexBuffer == nullptr)
+        {
+            SDL_Log("Failed to create vertex buffer: %s", SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+        app->vertexBuffer = vertexBuffer;
 
         SDL_GPUTransferBufferCreateInfo transferBufferCreateInfo {
             .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD,
