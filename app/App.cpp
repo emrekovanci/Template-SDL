@@ -3,7 +3,6 @@
 #include "PipelineWatcherContext.hpp"
 #include "Vertex.hpp"
 
-#include <algorithm>
 #include <array>
 #include <memory>
 
@@ -14,14 +13,25 @@
 
 namespace
 {
-    const std::array<Vertex, 6> vertices {
-        Vertex { .x = -0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
+    const std::array<Vertex, 3> vertices {
+        Vertex { .x = 0.0f, .y = 0.5f, .z = 0.0f, .r = 255, .g = 0, .b = 0, .a = 255 },
+        Vertex { .x = -0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
         Vertex { .x = 0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
-        Vertex { .x = -0.5f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
+    };
 
-        Vertex { .x = 0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
-        Vertex { .x = 0.5f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
-        Vertex { .x = -0.5f, .y = 0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
+    const std::array<SDL_GPUVertexAttribute, 2> vertexAttributes {
+        SDL_GPUVertexAttribute {
+            .location = 0,
+            .buffer_slot = 0,
+            .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
+            .offset = 0,
+        },
+        SDL_GPUVertexAttribute {
+            .location = 1,
+            .buffer_slot = 0,
+            .format = SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM,
+            .offset = sizeof(float) * 3,
+        },
     };
 
     SDL_AppResult loadGraphicsPipeline(void** appstate)
@@ -53,21 +63,6 @@ namespace
             .pitch = sizeof(Vertex),
             .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
             .instance_step_rate = 0,
-        };
-
-        std::array<SDL_GPUVertexAttribute, 2> vertexAttributes {
-            SDL_GPUVertexAttribute {
-                .location = 0,
-                .buffer_slot = 0,
-                .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                .offset = 0,
-            },
-            SDL_GPUVertexAttribute {
-                .location = 1,
-                .buffer_slot = 0,
-                .format = SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM,
-                .offset = sizeof(float) * 3,
-            },
         };
 
         // pipeline create info
@@ -130,7 +125,7 @@ namespace
             return SDL_APP_FAILURE;
         }
 
-        std::ranges::copy(vertices, transferData);
+        SDL_memcpy(transferData, vertices.data(), sizeof(Vertex) * vertices.size());
 
         SDL_UnmapGPUTransferBuffer(app->gpuDevice, transferBuffer);
 
