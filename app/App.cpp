@@ -97,7 +97,7 @@ namespace
 
         SDL_GPUBufferCreateInfo vertexBufferCreateInfo {
             .usage = SDL_GPU_BUFFERUSAGE_VERTEX,
-            .size = sizeof(Vertex) * vertices.size(),
+            .size = sizeof(Vertex) * std::size(vertices),
         };
         SDL_GPUBuffer* vertexBuffer = SDL_CreateGPUBuffer(app->gpuDevice, &vertexBufferCreateInfo);
         if (vertexBuffer == nullptr)
@@ -109,7 +109,7 @@ namespace
 
         SDL_GPUTransferBufferCreateInfo transferBufferCreateInfo {
             .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD,
-            .size = sizeof(Vertex) * vertices.size(),
+            .size = sizeof(Vertex) * std::size(vertices),
         };
         SDL_GPUTransferBuffer* transferBuffer = SDL_CreateGPUTransferBuffer(app->gpuDevice, &transferBufferCreateInfo);
         if (transferBuffer == nullptr)
@@ -151,7 +151,7 @@ namespace
         SDL_GPUBufferRegion vertexBufferRegion {
             .buffer = app->vertexBuffer,
             .offset = 0,
-            .size = sizeof(Vertex) * vertices.size(),
+            .size = sizeof(Vertex) * std::size(vertices),
         };
 
         SDL_UploadToGPUBuffer(copyPass, &transferBufferLocation, &vertexBufferRegion, false);
@@ -251,7 +251,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     };
 
     SDL_BindGPUVertexBuffers(renderPass, 0, &vertexBufferBinding, 1);
-    SDL_DrawGPUPrimitives(renderPass, vertices.size(), 1, 0, 0);
+    SDL_DrawGPUPrimitives(renderPass, std::size(vertices), 1, 0, 0);
     SDL_EndGPURenderPass(renderPass);
 
     SDL_SubmitGPUCommandBuffer(cmdbuf);
