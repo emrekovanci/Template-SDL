@@ -12,6 +12,7 @@ project(
 )
 
 include(GNUInstallDirs)
+include(cmake/Config.cmake)
 include(cmake/CompilerWarnings.cmake)
 include(cmake/LinkerFlags.cmake)
 

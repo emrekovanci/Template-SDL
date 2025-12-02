@@ -5,7 +5,7 @@ add_library(Core
     src/Core/Lib.cpp
 )
 target_include_directories(Core PUBLIC "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/library/include>")
-set_compiler_warnings(Core)
+set_target_warnings(Core)
 set_linker_flags(Core)
 
 include(GenerateExportHeader)
