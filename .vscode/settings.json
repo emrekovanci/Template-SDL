@@ -12,6 +12,7 @@
         ".vscode/.cache": true,
         ".vscode/TMPDIR": true,
         "**/.vs": true,
+        "**/.idea": true,
         "**/build": true,
         "**/out": true,
     },
@@ -34,9 +35,14 @@
     "cmake.copyCompileCommands": "${workspaceFolder}/.vscode/compile_commands.json",
     "cmake.options.statusBarVisibility": "hidden",
     // to disable showing the same problem twice (clangd & cmake)
+    "cmake.parseBuildDiagnostics": false,
     "cmake.enabledOutputParsers": [
         "cmake",
-        "gnuld"
+        "gcc",
+        "gnuld",
+        "msvc",
+        "ghs",
+        "diab"
     ],
     "cmake.pinnedCommands": [
         "cmake.selectConfigurePreset",

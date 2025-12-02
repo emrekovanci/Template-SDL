@@ -25,7 +25,7 @@ target_link_libraries(Application PRIVATE SDL3_image::SDL3_image)
 find_package(SDL3 CONFIG REQUIRED)
 target_link_libraries(Application PRIVATE SDL3::SDL3)
 
-set_compiler_warnings(Application)
+set_target_warnings(Application)
 set_linker_flags(Application)
 install(TARGETS Application)
 
