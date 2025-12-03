@@ -76,6 +76,7 @@ function(set_target_warnings target)
     if(PROJECT_COMPILER_CLANG OR PROJECT_COMPILER_CLANG_CL)
         target_compile_options(${target} PRIVATE
             -Wno-unknown-warning-option # do not warn on GCC-specific warning diagnostic pragmas
+            -Wno-missing-designated-field-initializers
         )
     endif()
 
