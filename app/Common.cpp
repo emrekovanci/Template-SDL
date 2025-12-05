@@ -53,7 +53,8 @@ SDL_GPUShader* compileHLSLShaderFromSource(
     SDL_ShaderCross_GraphicsShaderMetadata* metaData
 )
 {
-    std::filesystem::path shaderPath = std::filesystem::path(SDL_GetBasePath()) / "assets/shaders/source" / filename;
+    auto shaderPath = std::filesystem::path(SDL_GetBasePath()) / "assets/shaders/source" / filename;
+
     std::vector<char> shaderCode;
     if (!loadFileContets(shaderPath, shaderCode))
     {

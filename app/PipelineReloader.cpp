@@ -32,9 +32,6 @@ void PipelineReloader::handleFileAction(
         case efsw::Actions::Moved:
             SDL_Log("FILE: %s has event Moved from %s", filename.c_str(), oldFilename.c_str());
             break;
-        default:
-            SDL_Log("FILE: %s has unknown event", filename.c_str());
-            break;
     }
 
     m_reloadCallback();
