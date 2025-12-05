@@ -52,12 +52,10 @@ namespace
             return SDL_APP_FAILURE;
         }
 
-        // color target
         SDL_GPUColorTargetDescription colorTargetDesc {
             .format = SDL_GetGPUSwapchainTextureFormat(app->gpuDevice, app->window),
         };
 
-        // vertex buffer
         SDL_GPUVertexBufferDescription vertexBufferDesc {
             .slot = 0,
             .pitch = sizeof(Vertex),
@@ -65,7 +63,6 @@ namespace
             .instance_step_rate = 0,
         };
 
-        // pipeline create info
         SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo {
             .vertex_shader = vertexShader,
             .fragment_shader = fragmentShader,
@@ -126,7 +123,6 @@ namespace
         }
 
         SDL_memcpy(transferData, vertices.data(), sizeof(Vertex) * vertices.size());
-
         SDL_UnmapGPUTransferBuffer(app->gpuDevice, transferBuffer);
 
         SDL_GPUCommandBuffer* uploadCommandBuffer = SDL_AcquireGPUCommandBuffer(app->gpuDevice);
@@ -173,7 +169,7 @@ SDL_AppResult SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_un
 
     SDL_GPUDevice* gpuDevice = SDL_CreateGPUDevice(
         SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_MSL,
-        false,
+        true,
         nullptr
     );
     if (gpuDevice == nullptr)
@@ -262,8 +258,10 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 void SDL_AppQuit(void* appstate, [[maybe_unused]] SDL_AppResult result)
 {
     auto* app = static_cast<AppContext*>(appstate);
+
     SDL_ReleaseGPUBuffer(app->gpuDevice, app->vertexBuffer);
     SDL_ReleaseGPUGraphicsPipeline(app->gpuDevice, app->graphicsPipeline);
+    SDL_ReleaseWindowFromGPUDevice(app->gpuDevice, app->window);
     SDL_DestroyWindow(app->window);
     SDL_DestroyGPUDevice(app->gpuDevice);
 
