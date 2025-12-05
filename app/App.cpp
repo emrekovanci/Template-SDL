@@ -237,25 +237,28 @@ SDL_AppResult SDL_AppIterate(void* appstate)
         return SDL_APP_FAILURE;
     }
 
-    std::array colorTargetInfos { SDL_GPUColorTargetInfo {
-        .texture = swapchainTexture,
-        .clear_color = SDL_FColor { 0.0f, 0.0f, 0.0f, 1.0f },
-        .load_op = SDL_GPU_LOADOP_CLEAR,
-        .store_op = SDL_GPU_STOREOP_STORE,
-    } };
+    if (swapchainTexture != nullptr)
+    {
+        std::array colorTargetInfos { SDL_GPUColorTargetInfo {
+            .texture = swapchainTexture,
+            .clear_color = SDL_FColor { 0.0f, 0.0f, 0.0f, 1.0f },
+            .load_op = SDL_GPU_LOADOP_CLEAR,
+            .store_op = SDL_GPU_STOREOP_STORE,
+        } };
 
-    SDL_GPURenderPass* renderPass =
-        SDL_BeginGPURenderPass(cmdbuf, colorTargetInfos.data(), std::size(colorTargetInfos), nullptr);
-    SDL_BindGPUGraphicsPipeline(renderPass, app->graphicsPipeline);
+        SDL_GPURenderPass* renderPass =
+            SDL_BeginGPURenderPass(cmdbuf, colorTargetInfos.data(), std::size(colorTargetInfos), nullptr);
+        SDL_BindGPUGraphicsPipeline(renderPass, app->graphicsPipeline);
 
-    const SDL_GPUBufferBinding vertexBufferBinding {
-        .buffer = app->vertexBuffer,
-        .offset = 0,
-    };
+        std::array vertexBuffers { SDL_GPUBufferBinding {
+            .buffer = app->vertexBuffer,
+            .offset = 0,
+        } };
 
-    SDL_BindGPUVertexBuffers(renderPass, 0, &vertexBufferBinding, 1);
-    SDL_DrawGPUPrimitives(renderPass, std::size(vertices), 1, 0, 0);
-    SDL_EndGPURenderPass(renderPass);
+        SDL_BindGPUVertexBuffers(renderPass, 0, vertexBuffers.data(), std::size(vertexBuffers));
+        SDL_DrawGPUPrimitives(renderPass, std::size(vertices), 1, 0, 0);
+        SDL_EndGPURenderPass(renderPass);
+    }
 
     SDL_SubmitGPUCommandBuffer(cmdbuf);
 
