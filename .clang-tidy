@@ -13,6 +13,7 @@ Checks: >
   -hicpp-vararg,
   -llvm-header-guard,
   -llvm-include-order,
+  -llvm-prefer-static-over-anonymous-namespace,
   -llvmlibc-*,
   -misc-non-private-member-variables-in-classes,
   -misc-include-cleaner,

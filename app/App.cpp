@@ -65,7 +65,7 @@ namespace
             SDL_GPUColorTargetDescription { .format = SDL_GetGPUSwapchainTextureFormat(app->gpuDevice, app->window) },
         };
 
-        SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo {
+        const SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo {
             .vertex_shader = vertexShader,
             .fragment_shader = fragmentShader,
             .vertex_input_state {
@@ -75,7 +75,9 @@ namespace
                 .num_vertex_attributes = std::size(vertexAttributes),
             },
             .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
-            .rasterizer_state { .fill_mode = SDL_GPU_FILLMODE_FILL },
+            .rasterizer_state {
+                .fill_mode = SDL_GPU_FILLMODE_FILL,
+            },
             .target_info {
                 .color_target_descriptions = colorTargetDescriptions.data(),
                 .num_color_targets = std::size(colorTargetDescriptions),
@@ -94,7 +96,7 @@ namespace
         SDL_ReleaseGPUShader(app->gpuDevice, vertexShader);
         SDL_ReleaseGPUShader(app->gpuDevice, fragmentShader);
 
-        SDL_GPUBufferCreateInfo vertexBufferCreateInfo {
+        const SDL_GPUBufferCreateInfo vertexBufferCreateInfo {
             .usage = SDL_GPU_BUFFERUSAGE_VERTEX,
             .size = sizeof(Vertex) * std::size(vertices),
         };
@@ -106,7 +108,7 @@ namespace
         }
         app->vertexBuffer = vertexBuffer;
 
-        SDL_GPUTransferBufferCreateInfo transferBufferCreateInfo {
+        const SDL_GPUTransferBufferCreateInfo transferBufferCreateInfo {
             .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD,
             .size = sizeof(Vertex) * std::size(vertices),
         };
@@ -142,13 +144,13 @@ namespace
         }
 
         // source
-        SDL_GPUTransferBufferLocation transferBufferLocation {
+        const SDL_GPUTransferBufferLocation transferBufferLocation {
             .transfer_buffer = transferBuffer,
             .offset = 0,
         };
 
         // destination
-        SDL_GPUBufferRegion vertexBufferRegion {
+        const SDL_GPUBufferRegion vertexBufferRegion {
             .buffer = app->vertexBuffer,
             .offset = 0,
             .size = sizeof(Vertex) * std::size(vertices),
@@ -246,7 +248,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
         SDL_BeginGPURenderPass(cmdbuf, colorTargetInfos.data(), std::size(colorTargetInfos), nullptr);
     SDL_BindGPUGraphicsPipeline(renderPass, app->graphicsPipeline);
 
-    SDL_GPUBufferBinding vertexBufferBinding {
+    const SDL_GPUBufferBinding vertexBufferBinding {
         .buffer = app->vertexBuffer,
         .offset = 0,
     };
