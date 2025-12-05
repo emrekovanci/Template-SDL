@@ -15,6 +15,7 @@ Checks: >
   -llvm-include-order,
   -llvmlibc-*,
   -misc-non-private-member-variables-in-classes,
+  -misc-include-cleaner,
   -modernize-use-nodiscard,
   -modernize-use-trailing-return-type,
   -readability-identifier-length,

@@ -19,9 +19,12 @@ InlayHints:
 Hover:
   ShowAKA: No
 
+# fast check related warnings: https://github.com/clangd/clangd/issues/1727
 Diagnostics:
   UnusedIncludes: Strict
   MissingIncludes: None
+  ClangTidy:
+    FastCheckFilter: None
 
 ---
 
