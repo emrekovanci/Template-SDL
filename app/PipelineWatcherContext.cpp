@@ -10,7 +10,7 @@ void PipelineWatcherContext::watch(const std::function<void()>& callback)
     pipelineReloader = std::make_unique<PipelineReloader>();
     pipelineReloader->setReloadCallback(callback);
 
-    std::filesystem::path shadersDir = std::filesystem::path(SDL_GetBasePath()) / "assets/shaders/source";
+    auto shadersDir = std::filesystem::path(SDL_GetBasePath()) / "assets/shaders/source";
     watchID = fileWatcher->addWatch(shadersDir.string(), pipelineReloader.get(), true);
     fileWatcher->watch();
 }
