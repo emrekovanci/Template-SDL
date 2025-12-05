@@ -13,13 +13,22 @@
 
 namespace
 {
-    const std::array<Vertex, 3> vertices {
+    constexpr std::array vertices {
         Vertex { .x = 0.0f, .y = 0.5f, .z = 0.0f, .r = 255, .g = 0, .b = 0, .a = 255 },
         Vertex { .x = -0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 255, .b = 0, .a = 255 },
         Vertex { .x = 0.5f, .y = -0.5f, .z = 0.0f, .r = 0, .g = 0, .b = 255, .a = 255 },
     };
 
-    const std::array<SDL_GPUVertexAttribute, 2> vertexAttributes {
+    constexpr std::array vertexBufferDescriptions {
+        SDL_GPUVertexBufferDescription {
+            .slot = 0,
+            .pitch = sizeof(Vertex),
+            .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
+            .instance_step_rate = 0,
+        },
+    };
+
+    constexpr std::array vertexAttributes {
         SDL_GPUVertexAttribute {
             .location = 0,
             .buffer_slot = 0,
@@ -52,34 +61,24 @@ namespace
             return SDL_APP_FAILURE;
         }
 
-        // color target
-        SDL_GPUColorTargetDescription colorTargetDesc {
-            .format = SDL_GetGPUSwapchainTextureFormat(app->gpuDevice, app->window),
+        std::array colorTargetDescriptions {
+            SDL_GPUColorTargetDescription { .format = SDL_GetGPUSwapchainTextureFormat(app->gpuDevice, app->window) },
         };
 
-        // vertex buffer
-        SDL_GPUVertexBufferDescription vertexBufferDesc {
-            .slot = 0,
-            .pitch = sizeof(Vertex),
-            .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
-            .instance_step_rate = 0,
-        };
-
-        // pipeline create info
         SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo {
             .vertex_shader = vertexShader,
             .fragment_shader = fragmentShader,
             .vertex_input_state {
-                .vertex_buffer_descriptions = &vertexBufferDesc,
-                .num_vertex_buffers = 1,
+                .vertex_buffer_descriptions = vertexBufferDescriptions.data(),
+                .num_vertex_buffers = std::size(vertexBufferDescriptions),
                 .vertex_attributes = vertexAttributes.data(),
-                .num_vertex_attributes = 2,
+                .num_vertex_attributes = std::size(vertexAttributes),
             },
             .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
             .rasterizer_state { .fill_mode = SDL_GPU_FILLMODE_FILL },
             .target_info {
-                .color_target_descriptions = &colorTargetDesc,
-                .num_color_targets = 1,
+                .color_target_descriptions = colorTargetDescriptions.data(),
+                .num_color_targets = std::size(colorTargetDescriptions),
             },
         };
 
@@ -126,7 +125,6 @@ namespace
         }
 
         SDL_memcpy(transferData, vertices.data(), sizeof(Vertex) * vertices.size());
-
         SDL_UnmapGPUTransferBuffer(app->gpuDevice, transferBuffer);
 
         SDL_GPUCommandBuffer* uploadCommandBuffer = SDL_AcquireGPUCommandBuffer(app->gpuDevice);
@@ -143,11 +141,13 @@ namespace
             return SDL_APP_FAILURE;
         }
 
+        // source
         SDL_GPUTransferBufferLocation transferBufferLocation {
             .transfer_buffer = transferBuffer,
             .offset = 0,
         };
 
+        // destination
         SDL_GPUBufferRegion vertexBufferRegion {
             .buffer = app->vertexBuffer,
             .offset = 0,
@@ -173,7 +173,7 @@ SDL_AppResult SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_un
 
     SDL_GPUDevice* gpuDevice = SDL_CreateGPUDevice(
         SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_MSL,
-        false,
+        true,
         nullptr
     );
     if (gpuDevice == nullptr)
@@ -235,14 +235,15 @@ SDL_AppResult SDL_AppIterate(void* appstate)
         return SDL_APP_FAILURE;
     }
 
-    SDL_GPUColorTargetInfo colorTargetInfo {
+    std::array colorTargetInfos { SDL_GPUColorTargetInfo {
         .texture = swapchainTexture,
         .clear_color = SDL_FColor { 0.0f, 0.0f, 0.0f, 1.0f },
         .load_op = SDL_GPU_LOADOP_CLEAR,
         .store_op = SDL_GPU_STOREOP_STORE,
-    };
+    } };
 
-    SDL_GPURenderPass* renderPass = SDL_BeginGPURenderPass(cmdbuf, &colorTargetInfo, 1, nullptr);
+    SDL_GPURenderPass* renderPass =
+        SDL_BeginGPURenderPass(cmdbuf, colorTargetInfos.data(), std::size(colorTargetInfos), nullptr);
     SDL_BindGPUGraphicsPipeline(renderPass, app->graphicsPipeline);
 
     SDL_GPUBufferBinding vertexBufferBinding {
@@ -262,8 +263,10 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 void SDL_AppQuit(void* appstate, [[maybe_unused]] SDL_AppResult result)
 {
     auto* app = static_cast<AppContext*>(appstate);
+
     SDL_ReleaseGPUBuffer(app->gpuDevice, app->vertexBuffer);
     SDL_ReleaseGPUGraphicsPipeline(app->gpuDevice, app->graphicsPipeline);
+    SDL_ReleaseWindowFromGPUDevice(app->gpuDevice, app->window);
     SDL_DestroyWindow(app->window);
     SDL_DestroyGPUDevice(app->gpuDevice);
 
