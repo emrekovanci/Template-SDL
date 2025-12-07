@@ -32,7 +32,7 @@
     "cmake.configureOnEdit": false,
     "cmake.saveBeforeBuild": true,
     "cmake.clearOutputBeforeBuild": true,
-    "cmake.copyCompileCommands": "${workspaceFolder}/.vscode/compile_commands.json",
+    "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
     "cmake.options.statusBarVisibility": "hidden",
     // to disable showing the same problem twice (clangd & cmake)
     "cmake.parseBuildDiagnostics": false,
