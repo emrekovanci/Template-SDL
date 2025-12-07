@@ -13,7 +13,7 @@
             "name": "mac-ninja-clang",
             "displayName": "Mac Ninja Generator + Clang++",
             "description": "Configure Mac to use the Ninja generator and the Clang++ compiler",
-            "binaryDir": "${sourceDir}/build/mac_ninja_clang",
+            "binaryDir": "${sourceDir}/build/mac-ninja-clang",
             "inherits": [
                 "host-mac",
                 "cpp-standard",
@@ -26,7 +26,7 @@
             "name": "mac-xcode-clang",
             "displayName": "Mac Xcode Generator + Clang++",
             "description": "Configure Mac to use the Xcode generator and the Clang++ compiler",
-            "binaryDir": "${sourceDir}/build/mac_xcode_clang",
+            "binaryDir": "${sourceDir}/build/mac-xcode-clang",
             "inherits": [
                 "host-mac",
                 "cpp-standard",

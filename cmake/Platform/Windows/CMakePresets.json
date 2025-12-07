@@ -13,7 +13,7 @@
             "name": "windows-vs2022",
             "displayName": "Windows Visual Studio 2022 Generator + MSVC",
             "description": "Configure Windows to use the VS2022 generator",
-            "binaryDir": "${sourceDir}/build/windows_vs2022_msvc",
+            "binaryDir": "${sourceDir}/build/windows-vs2022-msvc",
             "inherits": [
                 "host-windows",
                 "cpp-standard",
@@ -34,7 +34,7 @@
             "name": "windows-vs2022-clangcl",
             "displayName": "Windows Visual Studio 2022 Generator + ClangCL",
             "description": "Configure Windows to use the VS2022 generator and the ClangCL compiler",
-            "binaryDir": "${sourceDir}/build/windows_vs2022_clangcl",
+            "binaryDir": "${sourceDir}/build/windows-vs2022-clangcl",
             "inherits": [
                 "host-windows",
                 "cpp-standard",
@@ -55,7 +55,7 @@
             "name": "windows-ninja",
             "displayName": "Windows Ninja Generator + MSVC",
             "description": "Configure Windows using the Ninja generator",
-            "binaryDir": "${sourceDir}/build/windows_ninja_msvc",
+            "binaryDir": "${sourceDir}/build/windows-ninja-msvc",
             "inherits": [
                 "host-windows",
                 "cpp-standard",
@@ -76,7 +76,7 @@
             "name": "windows-ninja-clangcl",
             "displayName": "Windows Ninja Generator + ClangCL",
             "description": "Configure Windows using the Ninja generator and the ClangCL compiler",
-            "binaryDir": "${sourceDir}/build/windows_ninja_clangcl",
+            "binaryDir": "${sourceDir}/build/windows-ninja-clangcl",
             "inherits": [
                 "host-windows",
                 "cpp-standard",

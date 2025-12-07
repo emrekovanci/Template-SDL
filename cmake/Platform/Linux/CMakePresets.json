@@ -13,7 +13,7 @@
             "name": "linux-ninja-gcc",
             "displayName": "Linux Ninja Generator + GCC",
             "description": "Configure Linux to use the Ninja generator and the GCC compiler",
-            "binaryDir": "${sourceDir}/build/linux_ninja_gcc",
+            "binaryDir": "${sourceDir}/build/linux-ninja-gcc",
             "inherits": [
                 "host-linux",
                 "cpp-standard",
@@ -26,7 +26,7 @@
             "name": "linux-ninja-clang",
             "displayName": "Linux Ninja Generator + Clang++",
             "description": "Configure Linux to use the Ninja generator and the Clang++ compiler",
-            "binaryDir": "${sourceDir}/build/linux_ninja_clang",
+            "binaryDir": "${sourceDir}/build/linux-ninja-clang",
             "inherits": [
                 "host-linux",
                 "cpp-standard",
