@@ -1,7 +1,7 @@
 # https://clangd.llvm.org/
 
 CompileFlags:
-  CompilationDatabase: .vscode
+  CompilationDatabase: .
 
 Style:
   FullyQualifiedNamespaces:
