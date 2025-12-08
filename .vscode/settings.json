@@ -10,6 +10,7 @@
     },
     "files.exclude": {
         ".vscode/.cache": true,
+        ".cache": true,
         ".vscode/TMPDIR": true,
         "**/.vs": true,
         "**/.idea": true,
